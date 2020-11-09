@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var buttonSettings: UIButton!
     
+    @IBOutlet weak var viewSplash: UIView!
+    
     @IBOutlet weak var viewVideoContainer: WebViewContainer!
     @IBOutlet weak var viewChatContainer: WebViewContainer!
     
@@ -81,6 +83,8 @@ class ViewController: UIViewController {
         
         updateChatTransparencyUI()
         updateChatWidthUI()
+        updateVideoDarkerUI()
+        updateBlockTapUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,6 +110,14 @@ class ViewController: UIViewController {
     
     func updateChatWidthUI() {
         widthChat.constant = CGFloat(settingsModel.chatWidth)
+    }
+    
+    func updateVideoDarkerUI() {
+        viewSplash.backgroundColor = UIColor.black.withAlphaComponent(CGFloat(settingsModel.videoDarker / 100))
+    }
+    
+    func updateBlockTapUI() {
+        viewSplash.isUserInteractionEnabled = settingsModel.blockTap
     }
     
     @objc func settingsHandler() {
@@ -147,6 +159,14 @@ extension ViewController: SettingsDelegate {
     
     func chatWidthChanged() {
         updateChatWidthUI()
+    }
+    
+    func videoDarkerChanged() {
+        updateVideoDarkerUI()
+    }
+    
+    func blockTapChanged() {
+        updateBlockTapUI()
     }
     
     func showBonusesChanged() {

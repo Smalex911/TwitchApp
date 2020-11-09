@@ -10,8 +10,12 @@ import Foundation
 class SettingsModel: Codable {
     
     var channelName: String?
+    
     var chatTransparency: Float = 1
     var chatWidth: Float = 300
+    
+    var videoDarker: Float = 0
+    var blockTap: Bool = false
     
     var showBonuses: Bool = false
     

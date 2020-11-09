@@ -15,6 +15,8 @@ protocol SettingsDelegate: class {
     
     func chatTransparencyChanged()
     func chatWidthChanged()
+    func videoDarkerChanged()
+    func blockTapChanged()
     func showBonusesChanged()
 }
 
@@ -27,6 +29,8 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var textFieldStreamer: UITextField!
     @IBOutlet weak var sliderChatTransparency: UISlider!
     @IBOutlet weak var sliderChatWidth: UISlider!
+    @IBOutlet weak var sliderVideoDarker: UISlider!
+    @IBOutlet weak var switchBlockTap: UISwitch!
     @IBOutlet weak var switchShowBonuses: UISwitch!
     @IBOutlet weak var switchLockOrientation: UISwitch!
     @IBOutlet weak var buttonResetPosition: UIButton!
@@ -44,6 +48,7 @@ class SettingsVC: UIViewController {
         buttonReload.addTarget(self, action: #selector(reloadHandler), for: .touchUpInside)
         buttonSave.addTarget(self, action: #selector(saveHandler), for: .touchUpInside)
         
+        textFieldStreamer.autocorrectionType = .no
         textFieldStreamer.clearButtonMode = .whileEditing
         textFieldStreamer.delegate = self
         
@@ -54,6 +59,12 @@ class SettingsVC: UIViewController {
         sliderChatWidth.minimumValue = 100
         sliderChatWidth.maximumValue = 1000
         sliderChatWidth.addTarget(self, action: #selector(chatWidthChanged(_:)), for: .valueChanged)
+        
+        sliderVideoDarker.minimumValue = 0
+        sliderVideoDarker.maximumValue = 100
+        sliderVideoDarker.addTarget(self, action: #selector(videoDarkerChanged(_:)), for: .valueChanged)
+        
+        switchBlockTap.addTarget(self, action: #selector(blockTapChanged(_:)), for: .valueChanged)
         
         switchShowBonuses.addTarget(self, action: #selector(showBonusesChanged(_:)), for: .valueChanged)
         switchLockOrientation.addTarget(self, action: #selector(lockOrientationChanged(_:)), for: .valueChanged)
@@ -90,6 +101,10 @@ class SettingsVC: UIViewController {
         textFieldStreamer.text = model.channelName
         sliderChatTransparency.value = model.chatTransparency
         sliderChatWidth.value = model.chatWidth
+        
+        sliderVideoDarker.value = model.videoDarker
+        switchBlockTap.isOn = model.blockTap
+        
         switchShowBonuses.isOn = model.showBonuses
         
         buttonResetPosition.layer.cornerRadius = 10
@@ -128,6 +143,18 @@ class SettingsVC: UIViewController {
         settingsModel?.chatWidth = sender.value
         
         delegate?.chatWidthChanged()
+    }
+    
+    @objc func videoDarkerChanged(_ sender: UISlider) {
+        settingsModel?.videoDarker = sender.value
+        
+        delegate?.videoDarkerChanged()
+    }
+    
+    @objc func blockTapChanged(_ sender: UISwitch) {
+        settingsModel?.blockTap = sender.isOn
+        
+        delegate?.blockTapChanged()
     }
     
     @objc func showBonusesChanged(_ sender: UISwitch) {
