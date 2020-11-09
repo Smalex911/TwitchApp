@@ -26,6 +26,10 @@ class ViewController: UIViewController {
     
     var settingsModel = SettingsModel.restore()
     
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
