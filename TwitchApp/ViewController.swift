@@ -123,8 +123,11 @@ class ViewController: UIViewController {
     @objc func settingsHandler() {
         guard let popupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsVC") as? SettingsVC else { return }
         
-        popupVC.modalPresentationStyle = .popover
-        popupVC.modalTransitionStyle = .crossDissolve
+        if #available(iOS 13.0, *) {
+            popupVC.modalPresentationStyle = .automatic
+        } else {
+            popupVC.modalPresentationStyle = .popover
+        }
         popupVC.preferredContentSize = .init(width: 300, height: 350)
         popupVC.popoverPresentationController?.sourceView = buttonSettings
         
