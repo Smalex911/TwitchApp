@@ -43,6 +43,9 @@ class ViewController: UIViewController {
         
         viewChatContainer.contentInsets = UIEdgeInsets(top: -50, left: -8, bottom: settingsModel.showBonuses ? 0 : -94, right: 0)
         viewChatContainer.initiateWebView(with: [.disableScrolling, .betterttv, .bonusesMining])
+        viewChatContainer.didTapLink = { [weak self] url in
+            self?.showWebView(url)
+        }
 //        viewChatContainer.addGestureRecognizers(in: view)
         
 //        webViewChat.navigationDelegate = self
@@ -135,6 +138,20 @@ class ViewController: UIViewController {
         popupVC.delegate = self
         
         present(popupVC, animated: true)
+    }
+    
+    func showWebView(_ url: URL) {
+        let vc = WebViewVC()
+        let nvc = UINavigationController(rootViewController: vc)
+        
+        if #available(iOS 13.0, *) {
+            nvc.modalPresentationStyle = .automatic
+        } else {
+            nvc.modalPresentationStyle = .fullScreen
+        }
+        vc.url = url
+        
+        present(nvc, animated: true)
     }
 }
 

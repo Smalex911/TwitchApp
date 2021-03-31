@@ -193,7 +193,7 @@ class SettingsVC: UIViewController {
         } else {
             nvc.modalPresentationStyle = .fullScreen
         }
-        vc.urlString = "https://www.twitch.tv/login"
+        vc.setUrlString("https://www.twitch.tv/login")
         vc.returnUrl = "https://www.twitch.tv/"
         
         vc.successCallback = { [weak self] in

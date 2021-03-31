@@ -12,7 +12,7 @@ class WebViewVC: UIViewController {
     
     var webView: WKWebView!
     
-    var urlString: String?
+    var url: URL?
     var returnUrl: String?
     
     var successCallback: (() -> Void)?
@@ -40,6 +40,11 @@ class WebViewVC: UIViewController {
         reloadUrl()
     }
     
+    func setUrlString(_ str: String?) {
+        guard let str = str else { return }
+        url = URL(string: str)
+    }
+    
     func add(_ view: UIView, to parent: UIView) {
         parent.addSubview(view)
         
@@ -57,7 +62,7 @@ class WebViewVC: UIViewController {
     }
     
     func reloadUrl() {
-        guard let str = urlString, let url = URL(string: str) else {
+        guard let url = url else {
             dismiss(animated: true)
             return
         }

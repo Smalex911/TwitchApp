@@ -23,6 +23,8 @@ class WebViewContainer: UIView {
         }
     }
     
+    var didTapLink: ((URL) -> Void)?
+    
     private var leftConstraint: NSLayoutConstraint?
     private var rightConstraint: NSLayoutConstraint?
     private var topConstraint: NSLayoutConstraint?
@@ -30,6 +32,7 @@ class WebViewContainer: UIView {
     
     func initiateWebView(with userScripts: [WKUserScript] = []) {
         let view = WKWebView(frame: bounds, configuration: configuration(userScripts))
+        view.navigationDelegate = self
         view.scrollView.isScrollEnabled = false
         view.isOpaque = false
         
@@ -107,6 +110,20 @@ extension WebViewContainer: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+extension WebViewContainer: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        didTapLink?(url)
+        decisionHandler(.cancel)
     }
 }
 
