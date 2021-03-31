@@ -27,6 +27,7 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var buttonSave: UIButton!
     
     @IBOutlet weak var textFieldStreamer: UITextField!
+    @IBOutlet weak var stackViewChannelNames: UIStackView!
     @IBOutlet weak var sliderChatTransparency: UISlider!
     @IBOutlet weak var sliderChatWidth: UISlider!
     @IBOutlet weak var sliderVideoDarker: UISlider!
@@ -38,7 +39,7 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var viewLogin: UIView!
     @IBOutlet weak var buttonLogin: UIButton!
     
-    var settingsModel: SettingsModel?
+    var settingsModel: SettingsInfo?
     weak var delegate: SettingsDelegate?
     
     override func viewDidLoad() {
@@ -87,7 +88,7 @@ class SettingsVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        settingsModel?.store()
+        SettingsService.shared.settings = settingsModel
     }
     
     func updateUI() {
@@ -99,6 +100,9 @@ class SettingsVC: UIViewController {
         }
         
         textFieldStreamer.text = model.channelName
+        
+        updateChannelNames()
+        
         sliderChatTransparency.value = model.chatTransparency
         sliderChatWidth.value = model.chatWidth
         
@@ -111,6 +115,24 @@ class SettingsVC: UIViewController {
         
         buttonLogin.layer.cornerRadius = 10
         updateLoginButton()
+    }
+    
+    func updateChannelNames() {
+        stackViewChannelNames.subviews.forEach { $0.removeFromSuperview() }
+        stackViewChannelNames.addSpace(height: 0)
+        
+        SettingsService.shared.channelNames?.forEach { name in
+            let v = ChannelNameView()
+            v.entity = name
+            v.didSelect = { [weak self] entity in
+                self?.textFieldStreamer.text = entity
+            }
+            v.didRemove = { [weak self] entity in
+                SettingsService.shared.removeChannelName(entity)
+                self?.updateChannelNames()
+            }
+            stackViewChannelNames.addArrangedSubview(v)
+        }
     }
     
     func updateLoginButton() {
@@ -128,6 +150,7 @@ class SettingsVC: UIViewController {
     
     @objc func saveHandler() {
         settingsModel?.channelName = textFieldStreamer.text?.notEmptyValue
+        SettingsService.shared.appendChannelName(settingsModel?.channelName)
         
         delegate?.reloadHandler()
         closeHandler()

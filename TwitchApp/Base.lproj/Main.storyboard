@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -155,6 +155,18 @@
                                                     <constraint firstAttribute="trailing" secondItem="aVf-dS-fkR" secondAttribute="trailing" constant="10" id="zbx-ni-87g"/>
                                                 </constraints>
                                             </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZeX-T6-YhE">
+                                                <rect key="frame" x="0.0" y="50" width="414" height="0.0"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f1v-Gt-kVL">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" id="f4X-Q6-Rr2"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T6d-ks-U72">
                                                 <rect key="frame" x="0.0" y="50" width="414" height="50"/>
                                                 <subviews>
@@ -359,6 +371,7 @@
                         <outlet property="sliderChatTransparency" destination="fEn-zX-uNr" id="fdi-0z-Mpm"/>
                         <outlet property="sliderChatWidth" destination="24T-5L-jHJ" id="LoQ-zw-gOd"/>
                         <outlet property="sliderVideoDarker" destination="0jA-6C-E8q" id="Pr2-1g-pVo"/>
+                        <outlet property="stackViewChannelNames" destination="ZeX-T6-YhE" id="8Ps-l1-KSy"/>
                         <outlet property="switchBlockTap" destination="Qwj-lm-gKa" id="rSh-Br-bTy"/>
                         <outlet property="switchLockOrientation" destination="eCD-y1-9Rr" id="5K2-4z-HNA"/>
                         <outlet property="switchShowBonuses" destination="k3w-Ou-uT0" id="LdR-50-EeA"/>

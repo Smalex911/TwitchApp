@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var widthChat: NSLayoutConstraint!
     
-    var settingsModel = SettingsModel.restore()
+    var settingsModel = SettingsService.shared.settings ?? SettingsInfo()
     
     override var prefersHomeIndicatorAutoHidden: Bool {
         true
